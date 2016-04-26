@@ -1,0 +1,230 @@
+{
+    "id": "ibm.devops.services.pipeline.dra_upload_results",
+    "version": 1,
+    "name_key": "ExtName",
+    "desc_key": "ExtDesc",
+    "extension_type": "Test",
+    "message_key": "ExtMessage",
+    "inputs": [
+        {
+            "type": "Artifacts",
+            "inclusion" : "always"
+        }
+    ],
+    "params": [
+        {
+            "name": "COMMAND",
+            "type": "TextArea",
+            "required": "true",
+            "default_value" : "#!/bin/bash",
+            "label_key": "COMMAND_KEY",
+            "desc_key": "COMMAND_DESC"
+        },
+        {
+            "name": "FORMAT_SELECT",
+            "type": "Select",
+            "required": "true",
+            "default_value": "none",
+            "label_key": "FORMAT_SELECT_KEY",
+            "desc_key": "FORMAT_SELECT_DESC",
+            "options": [
+                {
+                    "label_key": "FORMAT_OPTION_1_KEY",
+                    "value": "none"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_2_KEY",
+                    "value": "mocha"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_3_KEY",
+                    "value": "jasmine"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_4_KEY",
+                    "value": "istanbul"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_5_KEY",
+                    "value": "newrelic"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_6_KEY",
+                    "value": "github"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_7_KEY",
+                    "value": "sensu"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_8_KEY",
+                    "value": "uptime"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_9_KEY",
+                    "value": "slack"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_10_KEY",
+                    "value": "pagerduty"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_11_KEY",
+                    "value": "saucelabs"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_12_KEY",
+                    "value": "junit"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_13_KEY",
+                    "value": "blanket"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_14_KEY",
+                    "value": "karmamocha"
+                }
+            ]
+        },
+        {
+            "name": "LOG_FILE",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "LOG_FILE_KEY",
+            "desc_key": "LOG_FILE_DESC"
+        },
+        {
+            "name": "ENVIRONMENT",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "ENVIRONMENT_KEY",
+            "desc_key": "ENVIRONMENT_DESC"
+        },
+        {
+            "name": "MICROSERVICE",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "MICROSERVICE_KEY",
+            "desc_key": "MICROSERVICE_DESC"
+        },
+        {
+            "name": "MODULE",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "MODULE_KEY",
+            "desc_key": "MODULE_DESC"
+        },
+        {
+            "name": "LIFE_CYCLE_STAGE_SELECT",
+            "type": "Select",
+            "required": "true",
+            "default_value": "code",
+            "label_key": "LIFE_CYCLE_STAGE_SELECT_KEY",
+            "desc_key": "LIFE_CYCLE_STAGE_SELECT_DESC",
+            "options": [
+                {
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_1_KEY",
+                    "value": "code"
+                },
+                {
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_2_KEY",
+                    "value": "unittest"
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_3_KEY",
+                    "value": "smoketest" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_4_KEY",
+                    "value": "fvt" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_5_KEY",
+                    "value": "monitoring" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_6_KEY",
+                    "value": "deploy" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_7_KEY",
+                    "value": "othertest" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_8_KEY",
+                    "value": "codescan" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_9_KEY",
+                    "value": "licensescan" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_10_KEY",
+                    "value": "perftest" 
+                }
+            ]
+        }
+    ],
+    "outputs": [
+        {
+            "type": "Artifacts",
+            "inclusion" : "always"
+        },
+        {
+            "type": "Tests",
+            "inclusion": "optional"
+        }
+    ],
+    "execution": {
+        "type": "JenkinsDocker",
+        "shell": "#!/bin/bash
+
+set +x
+set +e 
+
+
+
+export DRA_LIFE_CYCLE_STAGE_SELECT=#LIFE_CYCLE_STAGE_SELECT#
+export DRA_ADVISORY_MODE=#ADVISORY_MODE#
+export DRA_TEST_TOOL_SELECT=#TEST_TOOL_SELECT#
+export DRA_TEST_LOG_FILE=#TEST_LOG_FILE#
+export DRA_MINIMUM_SUCCESS_RATE=#MINIMUM_SUCCESS_RATE#
+export DRA_CHECK_TEST_REGRESSION=#CHECK_TEST_REGRESSION#
+        
+export DRA_COVERAGE_TOOL_SELECT=#COVERAGE_TOOL_SELECT#
+export DRA_COVERAGE_LOG_FILE=#COVERAGE_LOG_FILE#
+export DRA_MINIMUM_COVERAGE_RATE=\"#MINIMUM_COVERAGE_RATE#\"
+export DRA_CHECK_COVERAGE_REGRESSION=#CHECK_COVERAGE_REGRESSION#
+export DRA_COVERAGE_REGRESSION_THRESHOLD=#COVERAGE_REGRESSION_THRESHOLD#
+
+        
+        
+function custom_cmd {
+    eval #COMMAND#
+    CMDRESULT=$?
+
+    if [ $CMDRESULT -ne 0 ]; then
+        exit 1
+    fi
+}
+    
+export -f custom_cmd        
+        
+        
+        
+. $EXT_DIR/execute.sh
+RESULT=$?
+        
+#if [ $RESULT -ne 0 ]; then
+if [ $RESULT -ne 0 ] && [ \"${DRA_ADVISORY_MODE}\" == \"false\" ]; then
+    exit 1
+fi
+    "},
+    "project": "https://hub.jazz.net/project/alchemy/Alchemy-Ostanes",
+    "project_example": "https://hub.jazz.net/pipeline/Osthanes/blazemeter_static",
+    "project_contact": "jparra@us.ibm.com"
+}
