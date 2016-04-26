@@ -36,39 +36,48 @@ set +x
 
 
 
-
+#
+# Build Grunt-Idra call
+#
+#   $1  Tool
+#   $2  Log file location
+#   $3  Environment
+#   $4  Microservice
+#   $5  Module
+#   $6  Stage
+#
 function dra_commands {
     echo -e "${no_color}"
     dra_grunt_command=""
     
     if [ -n "$1" ] && [ "$1" != " " ]; then
-        debugme echo "Tool: '$1' is defined and not empty"
-        
+    
         dra_grunt_command="grunt --gruntfile=node_modules/grunt-idra3/idra.js -tool=$1"
+        dra_grunt_command="$dra_grunt_command -testResult=$2"
+        dra_grunt_command="$dra_grunt_command -env=$3"
+        dra_grunt_command="$dra_grunt_command -stage=$6"
         
-        debugme echo -e "\tdra_grunt_command: $dra_grunt_command"
+        debugme echo -e "dra_grunt_command with tool, log, env, & stage: \t$dra_grunt_command"
         
-        if [ -n "$2" ] && [ "$2" != " " ]; then
-            debugme echo -e "\tTestResult: '$2' is defined and not empty"
-            
-            dra_grunt_command="$dra_grunt_command -testResult=$2"
+        if [ -n "$4" ] && [ "$4" != " " ]; then
         
+            debugme echo -e "\tMicroservice: '$4' is defined and not empty"
+            dra_grunt_command="$dra_grunt_command -stage=$4"
             debugme echo -e "\t\tdra_grunt_command: $dra_grunt_command"
             
         else
-            debugme echo -e "testResult: '$2' is not defined or is empty"
+            debugme echo -e "Life cycle stage: '$4' is not defined or is empty"
             debugme echo -e "${no_color}"
         fi
         
-        if [ -n "$3" ] && [ "$3" != " " ]; then
-            debugme echo -e "\tLife cycle stage: '$3' is defined and not empty"
-            
-            dra_grunt_command="$dra_grunt_command -stage=$3"
+        if [ -n "$5" ] && [ "$5" != " " ]; then
         
+            debugme echo -e "\tLife cycle stage: '$5' is defined and not empty"
+            dra_grunt_command="$dra_grunt_command -stage=$5"
             debugme echo -e "\t\tdra_grunt_command: $dra_grunt_command"
             
         else
-            debugme echo -e "Life cycle stage: '$3' is not defined or is empty"
+            debugme echo -e "Life cycle stage: '$5' is not defined or is empty"
             debugme echo -e "${no_color}"
         fi
         
@@ -152,153 +161,42 @@ npm install grunt-cli
 
 custom_cmd
 
+
 echo -e "${no_color}"
+debugme echo "DRA_FORMAT_SELECT: ${DRA_ADVISORY_MODE}"
+debugme echo "DRA_LOG_FILE: ${DRA_TEST_TOOL_SELECT}"
+debugme echo "DRA_ENVIRONMENT: ${DRA_TEST_LOG_FILE}"
+debugme echo "DRA_MICROSERVICE: ${DRA_MINIMUM_SUCCESS_RATE}"
+debugme echo "DRA_MODULE: ${DRA_CHECK_TEST_REGRESSION}"
+debugme echo "DRA_LIFE_CYCLE_STAGE_SELECT: ${DRA_LIFE_CYCLE_STAGE_SELECT}"
 
 debugme echo "DRA_SERVER: ${DRA_SERVER}"
-debugme echo "DRA_LIFE_CYCLE_STAGE_SELECT: ${DRA_LIFE_CYCLE_STAGE_SELECT}"
-debugme echo "DRA_ADVISORY_MODE: ${DRA_ADVISORY_MODE}"
-debugme echo "DRA_TEST_TOOL_SELECT: ${DRA_TEST_TOOL_SELECT}"
-debugme echo "DRA_TEST_LOG_FILE: ${DRA_TEST_LOG_FILE}"
-debugme echo "DRA_MINIMUM_SUCCESS_RATE: ${DRA_MINIMUM_SUCCESS_RATE}"
-debugme echo "DRA_CHECK_TEST_REGRESSION: ${DRA_CHECK_TEST_REGRESSION}"
-
-debugme echo "DRA_COVERAGE_TOOL_SELECT: ${DRA_COVERAGE_TOOL_SELECT}"
-debugme echo "DRA_COVERAGE_LOG_FILE: ${DRA_COVERAGE_LOG_FILE}"
-debugme echo "DRA_MINIMUM_COVERAGE_RATE: ${DRA_MINIMUM_COVERAGE_RATE}"
-debugme echo "DRA_CHECK_COVERAGE_REGRESSION: ${DRA_CHECK_COVERAGE_REGRESSION}"
-debugme echo "DRA_COVERAGE_REGRESSION_THRESHOLD: ${DRA_COVERAGE_REGRESSION_THRESHOLD}"
+debugme echo "CF_ORGANIZATION_ID: $CF_ORGANIZATION_ID"
+debugme echo "PIPELINE_INITIAL_STAGE_EXECUTION_ID: $PIPELINE_INITIAL_STAGE_EXECUTION_ID"
 debugme echo -e "${no_color}"
 
 
 
 
+if [ -n "${DRA_LOG_FILE}" ] && [ "${DRA_LOG_FILE}" != " " ] && \
+    [ -n "${DRA_ENVIRONMENT}" ] && [ "${DRA_ENVIRONMENT}" != " " ]; then
 
-
-
-#0 = DRA is present
-#1 = DRA not present or there was an error with the http call (err msg will show)
-#echo $RESULT
-
-if [ $RESULT -eq 0 ]; then
-    debugme echo "DRA is present";
+    if [ [ -n "${DRA_MICROSERVICE}" ] && [ "${DRA_MICROSERVICE}" != " " ] ] || \
+        [ [ -n "${DRA_MODULE}" ] && [ "${DRA_MODULE}" != " " ] ]; then
     
+        dra_commands "${DRA_FORMAT_SELECT}" "${DRA_LOG_FILE}" "${DRA_ENVIRONMENT}" "${DRA_MICROSERVICE}" "${DRA_MODULE}" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
     
-    criteriaList=()
-
-
-    if [ -n "${DRA_TEST_TOOL_SELECT}" ] && [ "${DRA_TEST_TOOL_SELECT}" != "none" ] && \
-        [ -n "${DRA_TEST_LOG_FILE}" ] && [ "${DRA_TEST_LOG_FILE}" != " " ]; then
-
-        dra_commands "${DRA_TEST_TOOL_SELECT}" "${DRA_TEST_LOG_FILE}" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
-
-        if [ -n "${DRA_MINIMUM_SUCCESS_RATE}" ] && [ "${DRA_MINIMUM_SUCCESS_RATE}" != " " ]; then
-            name="At least ${DRA_MINIMUM_SUCCESS_RATE}% success in unit tests (${DRA_TEST_TOOL_SELECT})"
-            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_mochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE}, \"forTool\": \"${DRA_TEST_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" } ] }"
-
-    #        if [ "${DRA_TEST_TOOL_SELECT}" == "mochaKarma" ]; then
-    #            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_karmaMochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE}, \"forTool\": \"${DRA_TEST_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" } ] }"
-    #        fi
-
-            #echo "criteria:  $criteria"
-            criteriaList=("${criteriaList[@]}" "$criteria")
-        fi
-
-        if [ -n "${DRA_CHECK_TEST_REGRESSION}" ] && [ "${DRA_CHECK_TEST_REGRESSION}" == "true" ]; then
-            name="No Regression in Unit Tests (${DRA_TEST_TOOL_SELECT})"
-            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasMochaTestRegressed\", \"op\": \"=\", \"value\": false, \"forTool\": \"${DRA_TEST_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" } ] }"
-
-            if [ "${DRA_TEST_TOOL_SELECT}" == "mochaKarma" ]; then
-                criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasKarmaMochaTestRegressed\", \"op\": \"=\", \"value\": false, \"forTool\": \"${DRA_TEST_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" } ] }"
-            fi
-
-            #echo "criteria:  $criteria"
-            criteriaList=("${criteriaList[@]}" "$criteria")
-        fi
-    fi
-
-    if [ -n "${DRA_COVERAGE_TOOL_SELECT}" ] && [ "${DRA_COVERAGE_TOOL_SELECT}" != "none" ] && \
-        [ -n "${DRA_COVERAGE_LOG_FILE}" ] && [ "${DRA_COVERAGE_LOG_FILE}" != " " ]; then
-
-        dra_commands "${DRA_COVERAGE_TOOL_SELECT}" "${DRA_COVERAGE_LOG_FILE}" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
-
-        if [ -n "${DRA_MINIMUM_COVERAGE_RATE}" ] && [ "${DRA_MINIMUM_COVERAGE_RATE}" != " " ]; then
-            name="At least ${DRA_MINIMUM_COVERAGE_RATE}% code coverage in unit tests (${DRA_COVERAGE_TOOL_SELECT})"
-
-            condition_2="{ \"eval\": \"contents.total.lines.pct\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" }"
-
-            if [ "${DRA_COVERAGE_TOOL_SELECT}" == "blanket" ]; then
-                condition_2="{ \"eval\": \"contents.coverage\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" }"
-            fi
-
-            criteria="{ \"name\": \"$name\", \"conditions\": [ "
-            criteria="$criteria $condition_2"
-            criteria="$criteria ] }"
-
-            #echo "criteria:  $criteria"
-            criteriaList=("${criteriaList[@]}" "$criteria")
-        fi
-
-        if [ -n "${DRA_CHECK_COVERAGE_REGRESSION}" ] && [ "${DRA_CHECK_COVERAGE_REGRESSION}" == "true" ] &&  \
-            [ -n "${DRA_COVERAGE_REGRESSION_THRESHOLD}" ] && [ "${DRA_COVERAGE_REGRESSION_THRESHOLD}" != " " ]; then
-            name="No coverage regression in unit tests (${DRA_COVERAGE_TOOL_SELECT})"
-
-            condition_1="{ \"eval\": \"_hasIstanbulCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false, \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" }"
-
-            if [ "${DRA_COVERAGE_TOOL_SELECT}" == "blanket" ]; then
-                condition_1="{ \"eval\": \"_hasBlanketCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false, \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" }"
-            fi
-
-            criteria="{ \"name\": \"$name\", \"conditions\": [ "
-            criteria="$criteria $condition_1"
-            criteria="$criteria ] }"
-
-            #echo "criteria:  $criteria"
-            criteriaList=("${criteriaList[@]}" "$criteria")
-        fi
-    fi
-
-
-    if [ ${#criteriaList[@]} -gt 0 ]; then
-        
-        mode=""
-        
-        if [ "${DRA_ADVISORY_MODE}" == "false" ]; then
-            mode="decision"
-        else
-            mode="advisory"
-        fi
-        
-        criteria="{ \"name\": \"DynamicCriteria\", \"mode\": \"$mode\", \"rules\": [ "
-
-        for i in "${criteriaList[@]}"
-        do
-            criteria="$criteria $i,"
-        done
-
-
-        criteria="${criteria%?}"
-        criteria="$criteria ] }"
-
-
-        echo $criteria > dynamicCriteria.json
-
-        debugme echo "Dynamic Criteria:"
-        debugme cat dynamicCriteria.json
-        debugme echo ""
-        debugme echo "CF_ORGANIZATION_ID: $CF_ORGANIZATION_ID"
-        debugme echo "PIPELINE_INITIAL_STAGE_EXECUTION_ID: $PIPELINE_INITIAL_STAGE_EXECUTION_ID"
-
+    else
         echo -e "${no_color}"
-        grunt --gruntfile=node_modules/grunt-idra3/idra.js -decision=dynamic -criteriafile=dynamicCriteria.json --no-color
-        DECISION_RESULT=$?
+        echo -e "${red}Microservice and/or a Module must be declared."
         echo -e "${no_color}"
-        
-        return $DECISION_RESULT
     fi
+    
 else
-    debugme echo "DRA is not present";
+    echo -e "${no_color}"
+    echo -e "${red}Location and an Environment Name must be declared."
+    echo -e "${no_color}"
 fi
-
 
 
 
