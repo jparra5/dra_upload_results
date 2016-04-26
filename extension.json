@@ -24,14 +24,10 @@
             "name": "FORMAT_SELECT",
             "type": "Select",
             "required": "true",
-            "default_value": "none",
+            "default_value": "mocha",
             "label_key": "FORMAT_SELECT_KEY",
             "desc_key": "FORMAT_SELECT_DESC",
             "options": [
-                {
-                    "label_key": "FORMAT_OPTION_1_KEY",
-                    "value": "none"
-                },
                 {
                     "label_key": "FORMAT_OPTION_2_KEY",
                     "value": "mocha"
@@ -188,18 +184,13 @@ set +e
 
 
 
+export DRA_COMMAND=#COMMAND#
+export DRA_FORMAT_SELECT=#FORMAT_SELECT#
+export DRA_LOG_FILE=#LOG_FILE#
+export DRA_ENVIRONMENT=#ENVIRONMENT#
+export DRA_MICROSERVICE=#MICROSERVICE#
+export DRA_MODULE=#MODULE#
 export DRA_LIFE_CYCLE_STAGE_SELECT=#LIFE_CYCLE_STAGE_SELECT#
-export DRA_ADVISORY_MODE=#ADVISORY_MODE#
-export DRA_TEST_TOOL_SELECT=#TEST_TOOL_SELECT#
-export DRA_TEST_LOG_FILE=#TEST_LOG_FILE#
-export DRA_MINIMUM_SUCCESS_RATE=#MINIMUM_SUCCESS_RATE#
-export DRA_CHECK_TEST_REGRESSION=#CHECK_TEST_REGRESSION#
-        
-export DRA_COVERAGE_TOOL_SELECT=#COVERAGE_TOOL_SELECT#
-export DRA_COVERAGE_LOG_FILE=#COVERAGE_LOG_FILE#
-export DRA_MINIMUM_COVERAGE_RATE=\"#MINIMUM_COVERAGE_RATE#\"
-export DRA_CHECK_COVERAGE_REGRESSION=#CHECK_COVERAGE_REGRESSION#
-export DRA_COVERAGE_REGRESSION_THRESHOLD=#COVERAGE_REGRESSION_THRESHOLD#
 
         
         
