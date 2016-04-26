@@ -56,16 +56,16 @@ function dra_commands {
         dra_grunt_command="$dra_grunt_command -env=$3"
         dra_grunt_command="$dra_grunt_command -stage=$5"
         
-        debugme echo -e "dra_grunt_command with tool, log, env, & stage: \t$dra_grunt_command"
+        debugme echo -e "dra_grunt_command with tool, log, env, & stage: \n\t$dra_grunt_command"
         
         if [ -n "$4" ] && [ "$4" != " " ]; then
         
-            debugme echo -e "\tMicroservice: '$4' is defined and not empty"
-            dra_grunt_command="$dra_grunt_command -stage=$4"
-            debugme echo -e "\t\tdra_grunt_command: $dra_grunt_command"
+            debugme echo -e "\tModule: '$4' is defined and not empty"
+            dra_grunt_command="$dra_grunt_command -module=$4"
+            debugme echo -e "\tdra_grunt_command: \n\t\t$dra_grunt_command"
             
         else
-            debugme echo -e "Life cycle stage: '$4' is not defined or is empty"
+            debugme echo -e "\tModule: '$4' is not defined or is empty"
             debugme echo -e "${no_color}"
         fi
         
@@ -79,7 +79,7 @@ function dra_commands {
         
         debugme echo "GRUNT_RESULT: $GRUNT_RESULT"
         
-        if [ $GRUNT_RESULT -ne 0 ] && [ "${DRA_ADVISORY_MODE}" == "false" ]; then
+        if [ $GRUNT_RESULT -ne 0 ]; then
             exit 1
         fi
     else
@@ -93,16 +93,26 @@ function dra_commands {
 
 
 
-if [ -z "$TOOLCHAIN_TOKEN" ]; then
-    export CF_TOKEN=$(sed -e 's/^.*"AccessToken":"\([^"]*\)".*$/\1/' ~/.cf/config.json)
-else
-    export CF_TOKEN=$TOOLCHAIN_TOKEN
-fi
 
 
 OUTPUT_FILE='draserver.txt'
-${EXT_DIR}/dra-check.py ${PIPELINE_TOOLCHAIN_ID} "${CF_TOKEN}" "${IDS_PROJECT_NAME}" "${OUTPUT_FILE}"
+${EXT_DIR}/dra-check.py ${PIPELINE_TOOLCHAIN_ID} "${$TOOLCHAIN_TOKEN}" "${IDS_PROJECT_NAME}" "${OUTPUT_FILE}"
 RESULT=$?
+
+#
+# Retrieve variables from toolchain API
+#
+DRA_CHECK_OUTPUT=`cat ${OUTPUT_FILE}`
+IFS=$'\n' read -rd '' -a dradataarray <<< "$DRA_CHECK_OUTPUT"
+export CF_ORGANIZATION_ID=${dradataarray[0]}
+#export DRA_SERVER=${dradataarray[1]}
+rm ${OUTPUT_FILE}
+
+
+
+
+
+
 
 #0 = DRA is present
 #1 = DRA not present or there was an error with the http call (err msg will show)
@@ -117,30 +127,12 @@ if [ $RESULT -eq 0 ]; then
     echo "**********************************************************************"
     echo -e "${no_color}"
     
-    #
-    # Retrieve variables from toolchain API
-    #
-    DRA_CHECK_OUTPUT=`cat ${OUTPUT_FILE}`
-    IFS=$'\n' read -rd '' -a dradataarray <<< "$DRA_CHECK_OUTPUT"
-    export CF_ORGANIZATION_ID=${dradataarray[0]}
-    #export DRA_SERVER=${dradataarray[1]}
-    rm ${OUTPUT_FILE}
-    
-    #
-    # Hardcoded until brokers are updated (DRA) and created (DLMS)
-    #
-    #export DLMS_SERVER=http://devops-datastore.stage1.mybluemix.net
-    #export DRA_SERVER=https://dra3.stage1.mybluemix.net
-    
-    npm install grunt-idra3
-
-    
 fi
 
 
 
 
-
+npm install grunt-idra3
 npm install grunt
 npm install grunt-cli
 

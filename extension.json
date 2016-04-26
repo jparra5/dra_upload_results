@@ -201,8 +201,7 @@ export -f custom_cmd
 . $EXT_DIR/execute.sh
 RESULT=$?
         
-#if [ $RESULT -ne 0 ]; then
-if [ $RESULT -ne 0 ] && [ \"${DRA_ADVISORY_MODE}\" == \"false\" ]; then
+if [ $RESULT -ne 0 ]; then
     exit 1
 fi
     "},
