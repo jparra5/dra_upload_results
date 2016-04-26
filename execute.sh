@@ -42,9 +42,8 @@ set +x
 #   $1  Tool
 #   $2  Log file location
 #   $3  Environment
-#   $4  Microservice
-#   $5  Module
-#   $6  Stage
+#   $4  Module
+#   $5  Stage
 #
 function dra_commands {
     echo -e "${no_color}"
@@ -55,7 +54,7 @@ function dra_commands {
         dra_grunt_command="grunt --gruntfile=node_modules/grunt-idra3/idra.js -tool=$1"
         dra_grunt_command="$dra_grunt_command -testResult=$2"
         dra_grunt_command="$dra_grunt_command -env=$3"
-        dra_grunt_command="$dra_grunt_command -stage=$6"
+        dra_grunt_command="$dra_grunt_command -stage=$5"
         
         debugme echo -e "dra_grunt_command with tool, log, env, & stage: \t$dra_grunt_command"
         
@@ -67,17 +66,6 @@ function dra_commands {
             
         else
             debugme echo -e "Life cycle stage: '$4' is not defined or is empty"
-            debugme echo -e "${no_color}"
-        fi
-        
-        if [ -n "$5" ] && [ "$5" != " " ]; then
-        
-            debugme echo -e "\tLife cycle stage: '$5' is defined and not empty"
-            dra_grunt_command="$dra_grunt_command -stage=$5"
-            debugme echo -e "\t\tdra_grunt_command: $dra_grunt_command"
-            
-        else
-            debugme echo -e "Life cycle stage: '$5' is not defined or is empty"
             debugme echo -e "${no_color}"
         fi
         
@@ -166,7 +154,6 @@ echo -e "${no_color}"
 debugme echo "DRA_FORMAT_SELECT: ${DRA_ADVISORY_MODE}"
 debugme echo "DRA_LOG_FILE: ${DRA_TEST_TOOL_SELECT}"
 debugme echo "DRA_ENVIRONMENT: ${DRA_TEST_LOG_FILE}"
-debugme echo "DRA_MICROSERVICE: ${DRA_MINIMUM_SUCCESS_RATE}"
 debugme echo "DRA_MODULE: ${DRA_CHECK_TEST_REGRESSION}"
 debugme echo "DRA_LIFE_CYCLE_STAGE_SELECT: ${DRA_LIFE_CYCLE_STAGE_SELECT}"
 
@@ -181,16 +168,7 @@ debugme echo -e "${no_color}"
 if [ -n "${DRA_LOG_FILE}" ] && [ "${DRA_LOG_FILE}" != " " ] && \
     [ -n "${DRA_ENVIRONMENT}" ] && [ "${DRA_ENVIRONMENT}" != " " ]; then
 
-    if [ [ -n "${DRA_MICROSERVICE}" ] && [ "${DRA_MICROSERVICE}" != " " ] ] || \
-        [ [ -n "${DRA_MODULE}" ] && [ "${DRA_MODULE}" != " " ] ]; then
-    
-        dra_commands "${DRA_FORMAT_SELECT}" "${DRA_LOG_FILE}" "${DRA_ENVIRONMENT}" "${DRA_MICROSERVICE}" "${DRA_MODULE}" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
-    
-    else
-        echo -e "${no_color}"
-        echo -e "${red}Microservice and/or a Module must be declared."
-        echo -e "${no_color}"
-    fi
+    dra_commands "${DRA_FORMAT_SELECT}" "${DRA_LOG_FILE}" "${DRA_ENVIRONMENT}" "${DRA_MODULE}" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
     
 else
     echo -e "${no_color}"
