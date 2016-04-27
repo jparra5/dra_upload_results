@@ -96,7 +96,7 @@ function dra_commands {
 
 
 OUTPUT_FILE='draserver.txt'
-${EXT_DIR}/dra-check.py ${PIPELINE_TOOLCHAIN_ID} "${$TOOLCHAIN_TOKEN}" "${IDS_PROJECT_NAME}" "${OUTPUT_FILE}"
+${EXT_DIR}/dra-check.py ${PIPELINE_TOOLCHAIN_ID} "${TOOLCHAIN_TOKEN}" "${IDS_PROJECT_NAME}" "${OUTPUT_FILE}"
 RESULT=$?
 
 #

@@ -93,7 +93,7 @@
         {
             "name": "ENVIRONMENT",
             "type": "Text",
-            "required": "false",
+            "required": "true",
             "default_value": "",
             "label_key": "ENVIRONMENT_KEY",
             "desc_key": "ENVIRONMENT_DESC"
