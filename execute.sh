@@ -146,7 +146,6 @@ echo -e "${no_color}"
 debugme echo "DRA_FORMAT_SELECT: ${DRA_ADVISORY_MODE}"
 debugme echo "DRA_LOG_FILE: ${DRA_TEST_TOOL_SELECT}"
 debugme echo "DRA_ENVIRONMENT: ${DRA_TEST_LOG_FILE}"
-debugme echo "DRA_MODULE: ${DRA_CHECK_TEST_REGRESSION}"
 debugme echo "DRA_LIFE_CYCLE_STAGE_SELECT: ${DRA_LIFE_CYCLE_STAGE_SELECT}"
 
 debugme echo "DRA_SERVER: ${DRA_SERVER}"
@@ -159,8 +158,12 @@ debugme echo -e "${no_color}"
 
 if [ -n "${DRA_LOG_FILE}" ] && [ "${DRA_LOG_FILE}" != " " ] && \
     [ -n "${DRA_ENVIRONMENT}" ] && [ "${DRA_ENVIRONMENT}" != " " ]; then
-
-    dra_commands "${DRA_FORMAT_SELECT}" "${DRA_LOG_FILE}" "${DRA_ENVIRONMENT}" "${DRA_MODULE}" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
+    
+    filename=$(basename "${DRA_LOG_FILE}")
+    extension="${filename##*.}"
+    filename="${filename%.*}"
+    
+    dra_commands "${DRA_FORMAT_SELECT}" "${DRA_LOG_FILE}" "${DRA_ENVIRONMENT}" "$filename" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
     
 else
     echo -e "${no_color}"
