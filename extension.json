@@ -33,48 +33,8 @@
                     "value": "mocha"
                 },
                 {
-                    "label_key": "FORMAT_OPTION_3_KEY",
-                    "value": "jasmine"
-                },
-                {
-                    "label_key": "FORMAT_OPTION_4_KEY",
-                    "value": "istanbul"
-                },
-                {
-                    "label_key": "FORMAT_OPTION_5_KEY",
-                    "value": "newrelic"
-                },
-                {
-                    "label_key": "FORMAT_OPTION_6_KEY",
-                    "value": "github"
-                },
-                {
-                    "label_key": "FORMAT_OPTION_7_KEY",
-                    "value": "sensu"
-                },
-                {
-                    "label_key": "FORMAT_OPTION_8_KEY",
-                    "value": "uptime"
-                },
-                {
-                    "label_key": "FORMAT_OPTION_9_KEY",
-                    "value": "slack"
-                },
-                {
-                    "label_key": "FORMAT_OPTION_10_KEY",
-                    "value": "pagerduty"
-                },
-                {
-                    "label_key": "FORMAT_OPTION_11_KEY",
-                    "value": "saucelabs"
-                },
-                {
                     "label_key": "FORMAT_OPTION_12_KEY",
                     "value": "junit"
-                },
-                {
-                    "label_key": "FORMAT_OPTION_13_KEY",
-                    "value": "blanket"
                 },
                 {
                     "label_key": "FORMAT_OPTION_14_KEY",
