@@ -143,10 +143,14 @@ custom_cmd
 
 
 echo -e "${no_color}"
-debugme echo "DRA_FORMAT_SELECT: ${DRA_ADVISORY_MODE}"
-debugme echo "DRA_LOG_FILE: ${DRA_TEST_TOOL_SELECT}"
+debugme echo "DRA_FORMAT_SELECT: ${DRA_FORMAT_SELECT}"
+debugme echo "DRA_LOG_FILE: ${DRA_LOG_FILE}"
 debugme echo "DRA_ENVIRONMENT: ${DRA_TEST_LOG_FILE}"
 debugme echo "DRA_LIFE_CYCLE_STAGE_SELECT: ${DRA_LIFE_CYCLE_STAGE_SELECT}"
+
+debugme echo "DRA_ADDITIONAL_FORMAT_SELECT: ${DRA_ADDITIONAL_FORMAT_SELECT}"
+debugme echo "DRA_ADDITIONAL_LOG_FILE: ${DRA_ADDITIONAL_LOG_FILE}"
+debugme echo "DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT: ${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}"
 
 debugme echo "DRA_SERVER: ${DRA_SERVER}"
 debugme echo "CF_ORGANIZATION_ID: $CF_ORGANIZATION_ID"
@@ -154,23 +158,40 @@ debugme echo "PIPELINE_INITIAL_STAGE_EXECUTION_ID: $PIPELINE_INITIAL_STAGE_EXECU
 debugme echo -e "${no_color}"
 
 
+if [ -n "${DRA_ENVIRONMENT}" ] && [ "${DRA_ENVIRONMENT}" != " " ]; then
+
+    if [ -n "${DRA_LOG_FILE}" ] && [ "${DRA_LOG_FILE}" != " " ]; then
+
+        filename=$(basename "${DRA_LOG_FILE}")
+        extension="${filename##*.}"
+        filename="${filename%.*}"
+
+        dra_commands "${DRA_FORMAT_SELECT}" "${DRA_LOG_FILE}" "${DRA_ENVIRONMENT}" "$filename.$extension" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
+
+    else
+        echo -e "${no_color}"
+        echo -e "${red}Location must be declared."
+        echo -e "${no_color}"
+    fi
 
 
-if [ -n "${DRA_LOG_FILE}" ] && [ "${DRA_LOG_FILE}" != " " ] && \
-    [ -n "${DRA_ENVIRONMENT}" ] && [ "${DRA_ENVIRONMENT}" != " " ]; then
-    
-    filename=$(basename "${DRA_LOG_FILE}")
-    extension="${filename##*.}"
-    filename="${filename%.*}"
-    
-    dra_commands "${DRA_FORMAT_SELECT}" "${DRA_LOG_FILE}" "${DRA_ENVIRONMENT}" "$filename" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
-    
+    if [ [ -n "${DRA_ADDITIONAL_LOG_FILE}" ] && [ "${DRA_ADDITIONAL_LOG_FILE}" != " " ] ] && \
+        [ [ -n "${DRA_ADDITIONAL_FORMAT_SELECT}" ] && [ "${DRA_ADDITIONAL_FORMAT_SELECT}" != "none" ] ] && \
+        [ [ -n "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" ] && [ "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" != "none" ] ]; then
+
+        filename=$(basename "${DRA_ADDITIONAL_LOG_FILE}")
+        extension="${filename##*.}"
+        filename="${filename%.*}"
+
+        dra_commands "${DRA_ADDITIONAL_FORMAT_SELECT}" "${DRA_ADDITIONAL_LOG_FILE}" "${DRA_ENVIRONMENT}" "$filename.$extension" "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}"
+
+    else
+        echo -e "${no_color}"
+        echo -e "For the Additional upload to work, you must enter a Location, Format, and a Life Cycle Stage."
+        echo -e "${no_color}"
+    fi
 else
     echo -e "${no_color}"
-    echo -e "${red}Location and an Environment Name must be declared."
+    echo -e "${red}Environment Name must be declared."
     echo -e "${no_color}"
 fi
-
-
-
-

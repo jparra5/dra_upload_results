@@ -21,6 +21,22 @@
             "desc_key": "COMMAND_DESC"
         },
         {
+            "name": "ENVIRONMENT",
+            "type": "Text",
+            "required": "true",
+            "default_value": "",
+            "label_key": "ENVIRONMENT_KEY",
+            "desc_key": "ENVIRONMENT_DESC"
+        },
+        {
+            "name": "LOG_FILE",
+            "type": "Text",
+            "required": "true",
+            "default_value": "",
+            "label_key": "LOG_FILE_KEY",
+            "desc_key": "LOG_FILE_DESC"
+        },
+        {
             "name": "FORMAT_SELECT",
             "type": "Select",
             "required": "true",
@@ -39,24 +55,16 @@
                 {
                     "label_key": "FORMAT_OPTION_14_KEY",
                     "value": "karmamocha"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_4_KEY",
+                    "value": "istanbul"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_13_KEY",
+                    "value": "blanket"
                 }
             ]
-        },
-        {
-            "name": "LOG_FILE",
-            "type": "Text",
-            "required": "false",
-            "default_value": "",
-            "label_key": "LOG_FILE_KEY",
-            "desc_key": "LOG_FILE_DESC"
-        },
-        {
-            "name": "ENVIRONMENT",
-            "type": "Text",
-            "required": "true",
-            "default_value": "",
-            "label_key": "ENVIRONMENT_KEY",
-            "desc_key": "ENVIRONMENT_DESC"
         },
         {
             "name": "LIFE_CYCLE_STAGE_SELECT",
@@ -66,6 +74,111 @@
             "label_key": "LIFE_CYCLE_STAGE_SELECT_KEY",
             "desc_key": "LIFE_CYCLE_STAGE_SELECT_DESC",
             "options": [
+                {
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_1_KEY",
+                    "value": "code"
+                },
+                {
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_2_KEY",
+                    "value": "unittest"
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_3_KEY",
+                    "value": "smoketest" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_4_KEY",
+                    "value": "fvt" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_5_KEY",
+                    "value": "monitoring" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_6_KEY",
+                    "value": "deploy" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_7_KEY",
+                    "value": "othertest" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_8_KEY",
+                    "value": "codescan" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_9_KEY",
+                    "value": "licensescan" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_10_KEY",
+                    "value": "perftest" 
+                }
+            ]
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        {
+            "name": "ADDITIONAL_LOG_FILE",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "ADDITIONAL_LOG_FILE_KEY",
+            "desc_key": "LOG_FILE_DESC"
+        },
+        {
+            "name": "ADDITIONAL_FORMAT_SELECT",
+            "type": "Select",
+            "required": "true",
+            "default_value": "none",
+            "label_key": "ADDITIONAL_FORMAT_SELECT_KEY",
+            "desc_key": "FORMAT_SELECT_DESC",
+            "options": [
+                {
+                    "label_key": "FORMAT_OPTION_1_KEY",
+                    "value": "none"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_2_KEY",
+                    "value": "mocha"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_12_KEY",
+                    "value": "junit"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_14_KEY",
+                    "value": "karmamocha"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_4_KEY",
+                    "value": "istanbul"
+                },
+                {
+                    "label_key": "FORMAT_OPTION_13_KEY",
+                    "value": "blanket"
+                }
+            ]
+        },
+        {
+            "name": "ADDITIONAL_LIFE_CYCLE_STAGE_SELECT",
+            "type": "Select",
+            "required": "true",
+            "default_value": "none",
+            "label_key": "ADDITIONAL_LIFE_CYCLE_STAGE_SELECT_KEY",
+            "desc_key": "LIFE_CYCLE_STAGE_SELECT_DESC",
+            "options": [
+                {
+                    "label_key": "FORMAT_OPTION_1_KEY",
+                    "value": "none"
+                },
                 {
                     "label_key": "LIFE_CYCLE_STAGE_OPTION_1_KEY",
                     "value": "code"
@@ -134,6 +247,9 @@ export DRA_LOG_FILE=#LOG_FILE#
 export DRA_ENVIRONMENT=#ENVIRONMENT#
 export DRA_LIFE_CYCLE_STAGE_SELECT=#LIFE_CYCLE_STAGE_SELECT#
 
+export DRA_ADDITIONAL_FORMAT_SELECT=#ADDITIONAL_FORMAT_SELECT#
+export DRA_ADDITIONAL_LOG_FILE=#ADDITIONAL_LOG_FILE#
+export DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT=#ADDITIONAL_LIFE_CYCLE_STAGE_SELECT#
         
         
 function custom_cmd {
