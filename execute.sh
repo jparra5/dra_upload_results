@@ -175,9 +175,9 @@ if [ -n "${DRA_ENVIRONMENT}" ] && [ "${DRA_ENVIRONMENT}" != " " ]; then
     fi
 
 
-    if [ [ -n "${DRA_ADDITIONAL_LOG_FILE}" ] && [ "${DRA_ADDITIONAL_LOG_FILE}" != " " ] ] && \
-        [ [ -n "${DRA_ADDITIONAL_FORMAT_SELECT}" ] && [ "${DRA_ADDITIONAL_FORMAT_SELECT}" != "none" ] ] && \
-        [ [ -n "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" ] && [ "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" != "none" ] ]; then
+    if [ -n "${DRA_ADDITIONAL_LOG_FILE}" ] && [ "${DRA_ADDITIONAL_LOG_FILE}" != " " ] && \
+        [ -n "${DRA_ADDITIONAL_FORMAT_SELECT}" ] && [ "${DRA_ADDITIONAL_FORMAT_SELECT}" != "none" ] && \
+        [ -n "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" ] && [ "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" != "none" ]; then
 
         filename=$(basename "${DRA_ADDITIONAL_LOG_FILE}")
         extension="${filename##*.}"
