@@ -83,20 +83,8 @@
                     "value": "unittest"
                 },
                 { 
-                    "label_key": "LIFE_CYCLE_STAGE_OPTION_3_KEY",
-                    "value": "smoketest" 
-                },
-                { 
                     "label_key": "LIFE_CYCLE_STAGE_OPTION_4_KEY",
                     "value": "fvt" 
-                },
-                { 
-                    "label_key": "LIFE_CYCLE_STAGE_OPTION_5_KEY",
-                    "value": "monitoring" 
-                },
-                { 
-                    "label_key": "LIFE_CYCLE_STAGE_OPTION_6_KEY",
-                    "value": "deploy" 
                 },
                 { 
                     "label_key": "LIFE_CYCLE_STAGE_OPTION_7_KEY",
@@ -105,14 +93,6 @@
                 { 
                     "label_key": "LIFE_CYCLE_STAGE_OPTION_8_KEY",
                     "value": "codescan" 
-                },
-                { 
-                    "label_key": "LIFE_CYCLE_STAGE_OPTION_9_KEY",
-                    "value": "licensescan" 
-                },
-                { 
-                    "label_key": "LIFE_CYCLE_STAGE_OPTION_10_KEY",
-                    "value": "perftest" 
                 }
             ]
         },
