@@ -6,7 +6,7 @@
     "extension_type": "Test",
     "message_key": "ExtMessage",
     "service_binding": {
-        "dra": {
+        "dra_upload_results": {
             
         }
     },
