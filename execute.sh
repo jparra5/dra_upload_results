@@ -60,12 +60,12 @@ function dra_commands {
         
         if [ -n "$4" ] && [ "$4" != " " ]; then
         
-            debugme echo -e "\tModule: '$4' is defined and not empty"
-            dra_grunt_command="$dra_grunt_command -module=$4"
+            debugme echo -e "\tartifact: '$4' is defined and not empty"
+            dra_grunt_command="$dra_grunt_command -artifact=$4"
             debugme echo -e "\tdra_grunt_command: \n\t\t$dra_grunt_command"
             
         else
-            debugme echo -e "\tModule: '$4' is not defined or is empty"
+            debugme echo -e "\tartifact: '$4' is not defined or is empty"
             debugme echo -e "${no_color}"
         fi
         
