@@ -5,6 +5,11 @@
     "desc_key": "ExtDesc",
     "extension_type": "Test",
     "message_key": "ExtMessage",
+    "service_binding": {
+        "dra": {
+            
+        }
+    },
     "inputs": [
         {
             "type": "Artifacts",
