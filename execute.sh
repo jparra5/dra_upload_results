@@ -52,8 +52,8 @@ function dra_commands {
     if [ -n "$1" ] && [ "$1" != " " ]; then
     
         dra_grunt_command="grunt --gruntfile=node_modules/grunt-idra3/idra.js -tool=$1"
-        dra_grunt_command="$dra_grunt_command -testResult=$2"
-        dra_grunt_command="$dra_grunt_command -env=$3"
+        dra_grunt_command="$dra_grunt_command -testResult=\"$2\""
+        dra_grunt_command="$dra_grunt_command -env=\"$3\""
         dra_grunt_command="$dra_grunt_command -stage=$5"
         
         debugme echo -e "dra_grunt_command with tool, log, env, & stage: \n\t$dra_grunt_command"
@@ -61,7 +61,7 @@ function dra_commands {
         if [ -n "$4" ] && [ "$4" != " " ]; then
         
             debugme echo -e "\tartifact: '$4' is defined and not empty"
-            dra_grunt_command="$dra_grunt_command -artifact=$4"
+            dra_grunt_command="$dra_grunt_command -artifact=\"$4\""
             debugme echo -e "\tdra_grunt_command: \n\t\t$dra_grunt_command"
             
         else
