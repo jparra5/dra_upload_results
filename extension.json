@@ -34,6 +34,14 @@
             "desc_key": "ENVIRONMENT_DESC"
         },
         {
+            "name": "APPLICATION_NAME",
+            "type": "Text",
+            "required": "true",
+            "default_value": "",
+            "label_key": "APPLICATION_NAME_KEY",
+            "desc_key": "APPLICATION_NAME_DESC"
+        },
+        {
             "name": "LOG_FILE",
             "type": "Text",
             "required": "true",
@@ -229,6 +237,7 @@ set +e
 export DRA_FORMAT_SELECT=#FORMAT_SELECT#
 export DRA_LOG_FILE=\"#LOG_FILE#\"
 export DRA_ENVIRONMENT=\"#ENVIRONMENT#\"
+export DRA_APPLICATION_NAME=\"#APPLICATION_NAME#\"
 export DRA_LIFE_CYCLE_STAGE_SELECT=#LIFE_CYCLE_STAGE_SELECT#
 
 export DRA_ADDITIONAL_FORMAT_SELECT=#ADDITIONAL_FORMAT_SELECT#
