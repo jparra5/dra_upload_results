@@ -121,7 +121,16 @@ if [ $RESULT -eq 0 ]; then
     echo "Deployment Risk Analytics (DRA) is active."
     echo "**********************************************************************"
     echo -e "${no_color}"
+else  
+    debugme echo "DRA is NOT present";
     
+    echo -e "${red}"
+    echo "*******************************************************************************************"
+    echo "In order to use this job extension, please add Deployment Risk Analytics to this toolchain."
+    echo "*******************************************************************************************"
+    echo -e "${no_color}"
+    
+    exit 1
 fi
 
 
