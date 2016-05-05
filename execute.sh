@@ -19,7 +19,7 @@
 # Colors    #
 #############
 export green='\e[0;32m'
-export red='\e[0;91m'
+export red='\e[0;31m'
 export label_color='\e[0;33m'
 export no_color='\e[0m' # No Color
 
