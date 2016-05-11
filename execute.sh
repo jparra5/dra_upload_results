@@ -166,6 +166,13 @@ fi
 if [ -n "${DRA_WORKING_DIRECTORY}" ] && [ "${DRA_WORKING_DIRECTORY}" != "" ]; then
     debugme echo "Changed directory to: ${DRA_WORKING_DIRECTORY}"
     cd "${DRA_WORKING_DIRECTORY}"
+    CHANGE_WORKING_DIR_RESULT=$?
+
+    debugme echo "CHANGE_WORKING_DIR_RESULT: $CHANGE_WORKING_DIR_RESULT"
+
+    if [ $CHANGE_WORKING_DIR_RESULT -ne 0 ]; then
+        exit 1
+    fi
 fi
 
 
