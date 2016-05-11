@@ -165,6 +165,10 @@ npm install grunt-idra3
 
 
 
+if [ -n "${DRA_WORKING_DIRECTORY}" ] && [ "${DRA_WORKING_DIRECTORY}" != "" ]; then
+    debugme echo "Changed directory to: ${DRA_WORKING_DIRECTORY}"
+    cd "${DRA_WORKING_DIRECTORY}"
+fi
 
 custom_cmd
 
@@ -172,6 +176,7 @@ custom_cmd
 echo -e "${no_color}"
 debugme echo "DRA_FORMAT_SELECT: ${DRA_FORMAT_SELECT}"
 debugme echo "DRA_LOG_FILE: ${DRA_LOG_FILE}"
+debugme echo "DRA_WORKING_DIRECTORY: ${DRA_WORKING_DIRECTORY}"
 debugme echo "DRA_ENVIRONMENT: ${DRA_ENVIRONMENT}"
 debugme echo "DRA_APPLICATION_NAME: ${DRA_APPLICATION_NAME}"
 debugme echo "DRA_LIFE_CYCLE_STAGE_SELECT: ${DRA_LIFE_CYCLE_STAGE_SELECT}"

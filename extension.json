@@ -21,6 +21,14 @@
             "desc_key": "COMMAND_DESC"
         },
         {
+            "name": "WORKING_DIRECTORY",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "WORKING_DIRECTORY_KEY",
+            "desc_key": "WORKING_DIRECTORY_DESC"
+        },
+        {
             "name": "ENVIRONMENT",
             "type": "Text",
             "required": "true",
@@ -231,6 +239,7 @@ set +e
 
 export DRA_FORMAT_SELECT=#FORMAT_SELECT#
 export DRA_LOG_FILE=\"#LOG_FILE#\"
+export DRA_WORKING_DIRECTORY=\"#WORKING_DIRECTORY#\"
 export DRA_ENVIRONMENT=\"#ENVIRONMENT#\"
 export DRA_APPLICATION_NAME=\"#APPLICATION_NAME#\"
 export DRA_LIFE_CYCLE_STAGE_SELECT=#LIFE_CYCLE_STAGE_SELECT#
