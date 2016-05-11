@@ -116,7 +116,22 @@ if [ $RESULT -eq 0 ]; then
     DRA_CHECK_OUTPUT=`cat ${OUTPUT_FILE}`
     IFS=$'\n' read -rd '' -a dradataarray <<< "$DRA_CHECK_OUTPUT"
     export CF_ORGANIZATION_ID=${dradataarray[0]}
-    #export DRA_SERVER=${dradataarray[1]}
+    
+    
+    #
+    # Use parameters from broker unless the environment variables are defined.
+    #
+    if [ -z "${CF_CONTROLLER}" ] || [ "${CF_CONTROLLER}" == "" ]; then
+        export CF_CONTROLLER=${dradataarray[1]}    
+    fi
+    if [ -z "${DRA_SERVER}" ] || [ "${DRA_SERVER}" == "" ]; then
+        export DRA_SERVER=${dradataarray[2]}    
+    fi
+    if [ -z "${DLMS_SERVER}" ] || [ "${DLMS_SERVER}" == "" ]; then
+        export DLMS_SERVER=${dradataarray[3]}    
+    fi
+    
+    
     rm ${OUTPUT_FILE}
     
     
