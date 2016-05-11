@@ -159,9 +159,7 @@ fi
 
 
 
-npm install grunt
-npm install grunt-cli
-npm install grunt-idra3
+
 
 
 
@@ -169,6 +167,12 @@ if [ -n "${DRA_WORKING_DIRECTORY}" ] && [ "${DRA_WORKING_DIRECTORY}" != "" ]; th
     debugme echo "Changed directory to: ${DRA_WORKING_DIRECTORY}"
     cd "${DRA_WORKING_DIRECTORY}"
 fi
+
+
+npm install grunt
+npm install grunt-cli
+npm install grunt-idra3
+
 
 custom_cmd
 
