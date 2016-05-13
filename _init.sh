@@ -25,7 +25,7 @@ source ${SCRIPTDIR}/git_util.sh
 # Get common initialization project
 pushd . >/dev/null
 cd $SCRIPTDIR
-git_retry clone https://github.com/jparra5/dra_utilities.git utilities
+git_retry clone https://github.com/jparra5/dra_utilities0.git utilities
 popd >/dev/null
 
 # Call common initialization

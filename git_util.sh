@@ -27,7 +27,7 @@ with_retry() {
         local START_TIME=$(date +"%s")
     fi
     local RETRY_CALL="$*"
-    echo $RETRY_CALL
+    #echo $RETRY_CALL
     $RETRY_CALL
     local RETRY_RC=$?
     local CURRENT_RETRY_COUNT=0
