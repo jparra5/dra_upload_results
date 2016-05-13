@@ -99,8 +99,10 @@ if [ -n "${DRA_WORKING_DIRECTORY}" ] && [ "${DRA_WORKING_DIRECTORY}" != "" ]; th
 fi
 
 
-installDRADependencies
 
+
+
+installDRADependencies
 
 custom_cmd
 
