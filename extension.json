@@ -262,6 +262,8 @@ export -f custom_cmd
         
         
 . $EXT_DIR/_init.sh
+    ls -l
+    ls -l ..
 . $EXT_DIR/execute.sh
 RESULT=$?
         
