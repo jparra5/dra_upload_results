@@ -28,7 +28,7 @@ with_retry() {
     fi
     local RETRY_CALL="$*"
     #echo $RETRY_CALL
-    $RETRY_CALL >> /dev/null
+    $RETRY_CALL > /dev/null 2>&1
     local RETRY_RC=$?
     local CURRENT_RETRY_COUNT=0
     if [ -z "$CMD_RETRY" ]; then
