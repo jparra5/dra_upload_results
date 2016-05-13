@@ -15,21 +15,6 @@
 #   See the License for the specific language governing permissions and
 #********************************************************************************
 
-#############
-# Colors    #
-#############
-export green='\e[0;32m'
-export red='\e[0;31m'
-export label_color='\e[0;33m'
-export no_color='\e[0m' # No Color
-
-##################################################
-# Simple function to only run command if DEBUG=1 # 
-### ###############################################
-debugme() {
-  [[ $EXTENSION_DEBUG = 1 ]] && "$@" || :
-}
-
 set +e
 set +x 
 
@@ -93,7 +78,7 @@ printDRAMessage
 OUTPUT_FILE='draserver.txt'
 ${EXT_DIR}/dra-check.py ${PIPELINE_TOOLCHAIN_ID} "${TOOLCHAIN_TOKEN}" "${IDS_PROJECT_NAME}" "${OUTPUT_FILE}"
 RESULT=$?
-
+export DRA_PRESENT=$RESULT
 
 
 
@@ -135,24 +120,24 @@ if [ $RESULT -eq 0 ]; then
     fi
     
     
-    rm ${OUTPUT_FILE}
-    
-    
-    echo -e "${green}"
-    echo "**********************************************************************"
-    echo "Deployment Risk Analytics (DRA) is active."
-    echo "**********************************************************************"
-    echo -e "${no_color}"
+#    rm ${OUTPUT_FILE}
+#    
+#    
+#    echo -e "${green}"
+#    echo "**********************************************************************"
+#    echo "Deployment Risk Analytics (DRA) is active."
+#    echo "**********************************************************************"
+#    echo -e "${no_color}"
 else  
     debugme echo "DRA is NOT present";
     
-    echo -e "${red}"
-    echo "*******************************************************************************************"
-    echo "In order to use this job extension, please add Deployment Risk Analytics to this toolchain."
-    echo "*******************************************************************************************"
-    echo -e "${no_color}"
-    
-    exit 1
+#    echo -e "${red}"
+#    echo "*******************************************************************************************"
+#    echo "In order to use this job extension, please add Deployment Risk Analytics to this toolchain."
+#    echo "*******************************************************************************************"
+#    echo -e "${no_color}"
+#    
+#    exit 1
 fi
 
 
