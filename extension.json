@@ -261,7 +261,7 @@ function custom_cmd {
 export -f custom_cmd        
         
         
-        
+. $EXT_DIR/_init.sh
 . $EXT_DIR/execute.sh
 RESULT=$?
         
