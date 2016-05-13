@@ -71,7 +71,7 @@ function dra_commands {
 
 
 
-printDRAMessage
+
 
 
 
@@ -142,7 +142,7 @@ fi
 
 
 
-
+printInitialDRAMessage
 
 
 
