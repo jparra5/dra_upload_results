@@ -45,14 +45,6 @@
             "desc_key": "APPLICATION_NAME_DESC"
         },
         {
-            "name": "LOG_FILE",
-            "type": "Text",
-            "required": "true",
-            "default_value": "",
-            "label_key": "LOG_FILE_KEY",
-            "desc_key": "LOG_FILE_DESC"
-        },
-        {
             "name": "FORMAT_SELECT",
             "type": "Select",
             "required": "true",
@@ -104,23 +96,24 @@
                 }
             ]
         },
-        
-        
-        
-        
-        
-        
-        
-        
-        
         {
-            "name": "ADDITIONAL_LOG_FILE",
+            "name": "LOG_FILE",
             "type": "Text",
-            "required": "false",
+            "required": "true",
             "default_value": "",
-            "label_key": "ADDITIONAL_LOG_FILE_KEY",
+            "label_key": "LOG_FILE_KEY",
             "desc_key": "LOG_FILE_DESC"
         },
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
         {
             "name": "ADDITIONAL_FORMAT_SELECT",
             "type": "Select",
@@ -180,6 +173,14 @@
                     "value": "fvt" 
                 }
             ]
+        },
+        {
+            "name": "ADDITIONAL_LOG_FILE",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "ADDITIONAL_LOG_FILE_KEY",
+            "desc_key": "LOG_FILE_DESC"
         }
     ],
     "outputs": [
