@@ -78,7 +78,7 @@
             "name": "LIFE_CYCLE_STAGE_SELECT",
             "type": "Select",
             "required": "true",
-            "default_value": "code",
+            "default_value": "unittest",
             "label_key": "LIFE_CYCLE_STAGE_SELECT_KEY",
             "desc_key": "LIFE_CYCLE_STAGE_SELECT_DESC",
             "options": [
