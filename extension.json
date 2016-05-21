@@ -45,6 +45,28 @@
             "desc_key": "APPLICATION_NAME_DESC"
         },
         {
+            "name": "LIFE_CYCLE_STAGE_SELECT",
+            "type": "Select",
+            "required": "true",
+            "default_value": "unittest",
+            "label_key": "LIFE_CYCLE_STAGE_SELECT_KEY",
+            "desc_key": "LIFE_CYCLE_STAGE_SELECT_DESC",
+            "options": [
+                {
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_1_KEY",
+                    "value": "code"
+                },
+                {
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_2_KEY",
+                    "value": "unittest"
+                },
+                {
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_4_KEY",
+                    "value": "fvt"
+                }
+            ]
+        },
+        {
             "name": "FORMAT_SELECT",
             "type": "Select",
             "required": "true",
@@ -75,13 +97,35 @@
             ]
         },
         {
-            "name": "LIFE_CYCLE_STAGE_SELECT",
+            "name": "LOG_FILE",
+            "type": "Text",
+            "required": "true",
+            "default_value": "",
+            "label_key": "LOG_FILE_KEY",
+            "desc_key": "LOG_FILE_DESC"
+        },
+
+
+
+
+
+
+
+
+
+
+        {
+            "name": "ADDITIONAL_LIFE_CYCLE_STAGE_SELECT",
             "type": "Select",
             "required": "true",
-            "default_value": "unittest",
-            "label_key": "LIFE_CYCLE_STAGE_SELECT_KEY",
+            "default_value": "none",
+            "label_key": "ADDITIONAL_LIFE_CYCLE_STAGE_SELECT_KEY",
             "desc_key": "LIFE_CYCLE_STAGE_SELECT_DESC",
             "options": [
+                {
+                    "label_key": "FORMAT_OPTION_1_KEY",
+                    "value": "none"
+                },
                 {
                     "label_key": "LIFE_CYCLE_STAGE_OPTION_1_KEY",
                     "value": "code"
@@ -90,30 +134,12 @@
                     "label_key": "LIFE_CYCLE_STAGE_OPTION_2_KEY",
                     "value": "unittest"
                 },
-                { 
+                {
                     "label_key": "LIFE_CYCLE_STAGE_OPTION_4_KEY",
-                    "value": "fvt" 
+                    "value": "fvt"
                 }
             ]
         },
-        {
-            "name": "LOG_FILE",
-            "type": "Text",
-            "required": "true",
-            "default_value": "",
-            "label_key": "LOG_FILE_KEY",
-            "desc_key": "LOG_FILE_DESC"
-        },
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
         {
             "name": "ADDITIONAL_FORMAT_SELECT",
             "type": "Select",
@@ -145,32 +171,6 @@
                 {
                     "label_key": "FORMAT_OPTION_13_KEY",
                     "value": "blanket"
-                }
-            ]
-        },
-        {
-            "name": "ADDITIONAL_LIFE_CYCLE_STAGE_SELECT",
-            "type": "Select",
-            "required": "true",
-            "default_value": "none",
-            "label_key": "ADDITIONAL_LIFE_CYCLE_STAGE_SELECT_KEY",
-            "desc_key": "LIFE_CYCLE_STAGE_SELECT_DESC",
-            "options": [
-                {
-                    "label_key": "FORMAT_OPTION_1_KEY",
-                    "value": "none"
-                },
-                {
-                    "label_key": "LIFE_CYCLE_STAGE_OPTION_1_KEY",
-                    "value": "code"
-                },
-                {
-                    "label_key": "LIFE_CYCLE_STAGE_OPTION_2_KEY",
-                    "value": "unittest"
-                },
-                { 
-                    "label_key": "LIFE_CYCLE_STAGE_OPTION_4_KEY",
-                    "value": "fvt" 
                 }
             ]
         },
