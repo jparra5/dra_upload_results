@@ -63,6 +63,10 @@ function dra_commands {
     debugme echo "GRUNT_RESULT: $GRUNT_RESULT"
 
     if [ $GRUNT_RESULT -ne 0 ]; then
+        sudo apt-get update &>/dev/null
+        sudo apt-get -y install traceroute &>/dev/null
+        traceroute "${DLMS_SERVER}"
+
         exit 1
     fi
     
