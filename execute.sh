@@ -33,7 +33,8 @@ set +x
 #
 function dra_commands {
     echo -e "${no_color}"
-    dra_grunt_command="grunt --gruntfile=node_modules/grunt-idra3/idra.js -tool=$1"
+    node_modules_dir=`npm root`
+    dra_grunt_command="grunt --gruntfile=$node_modules_dir/grunt-idra3/idra.js -tool=$1"
     dra_grunt_command="$dra_grunt_command -testResult=\"$2\""
     dra_grunt_command="$dra_grunt_command -env=\"$3\""
     dra_grunt_command="$dra_grunt_command -runtime=\"$4\""
