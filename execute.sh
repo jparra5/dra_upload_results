@@ -39,7 +39,6 @@ function dra_commands {
     dra_grunt_command="$dra_grunt_command -env=\"$3\""
     dra_grunt_command="$dra_grunt_command -runtime=\"$4\""
     dra_grunt_command="$dra_grunt_command -stage=$6"
-    dra_grunt_command="$dra_grunt_command --base=\"./\""
 
     debugme echo -e "dra_grunt_command with tool, log, env, & stage: \n\t$dra_grunt_command"
 
