@@ -24,33 +24,32 @@ set +x
 #
 # Build Grunt-Idra call
 #
-#   $1  Tool
-#   $2  Log file location
-#   $3  Environment
-#   $4  Application Name
-#   $5  Artifact
-#   $6  Stage
+#   $1  Log file location
+#   $2  Environment
+#   $3  Application Name
+#   $4  Artifact
+#   $5  Stage
 #
 function dra_commands {
     echo -e "${no_color}"
     node_modules_dir=`npm root`
 
-    dra_grunt_command="grunt --gruntfile=$node_modules_dir/grunt-idra3/idra.js -tool=$1"
-    dra_grunt_command="$dra_grunt_command -testResult=\"$DRA_CURRENT_DIR/$2\""
-    dra_grunt_command="$dra_grunt_command -env=\"$3\""
-    dra_grunt_command="$dra_grunt_command -runtime=\"$4\""
-    dra_grunt_command="$dra_grunt_command -stage=$6"
+    dra_grunt_command="grunt --gruntfile=$node_modules_dir/grunt-idra3/idra.js"
+    dra_grunt_command="$dra_grunt_command -testResult=\"$DRA_CURRENT_DIR/$1\""
+    dra_grunt_command="$dra_grunt_command -env=\"$2\""
+    dra_grunt_command="$dra_grunt_command -runtime=\"$3\""
+    dra_grunt_command="$dra_grunt_command -stage=\"$5\""
 
     debugme echo -e "dra_grunt_command with tool, log, env, & stage: \n\t$dra_grunt_command"
 
-    if [ -n "$5" ] && [ "$5" != " " ]; then
+    if [ -n "$4" ] && [ "$4" != " " ]; then
 
-        debugme echo -e "\tartifact: '$5' is defined and not empty"
-        dra_grunt_command="$dra_grunt_command -artifact=\"$5\""
+        debugme echo -e "\tartifact: '$4' is defined and not empty"
+        dra_grunt_command="$dra_grunt_command -artifact=\"$4\""
         debugme echo -e "\tdra_grunt_command: \n\t\t$dra_grunt_command"
 
     else
-        debugme echo -e "\tartifact: '$5' is not defined or is empty"
+        debugme echo -e "\tartifact: '$4' is not defined or is empty"
         debugme echo -e "${no_color}"
     fi
 
@@ -119,14 +118,12 @@ custom_cmd
 
 
 echo -e "${no_color}"
-debugme echo "DRA_FORMAT_SELECT: ${DRA_FORMAT_SELECT}"
 debugme echo "DRA_LOG_FILE: ${DRA_LOG_FILE}"
 debugme echo "DRA_WORKING_DIRECTORY: ${DRA_WORKING_DIRECTORY}"
 debugme echo "DRA_ENVIRONMENT: ${DRA_ENVIRONMENT}"
 debugme echo "DRA_APPLICATION_NAME: ${DRA_APPLICATION_NAME}"
 debugme echo "DRA_LIFE_CYCLE_STAGE_SELECT: ${DRA_LIFE_CYCLE_STAGE_SELECT}"
 
-debugme echo "DRA_ADDITIONAL_FORMAT_SELECT: ${DRA_ADDITIONAL_FORMAT_SELECT}"
 debugme echo "DRA_ADDITIONAL_LOG_FILE: ${DRA_ADDITIONAL_LOG_FILE}"
 debugme echo "DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT: ${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}"
 
@@ -149,7 +146,7 @@ if [ -n "${DRA_ENVIRONMENT}" ] && [ "${DRA_ENVIRONMENT}" != " " ] && \
             extension="${filename##*.}"
             filename="${filename%.*}"
 
-            dra_commands "${DRA_FORMAT_SELECT}" "$file" "${DRA_ENVIRONMENT}" "${DRA_APPLICATION_NAME}" "$filename.$extension" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
+            dra_commands "$file" "${DRA_ENVIRONMENT}" "${DRA_APPLICATION_NAME}" "$filename.$extension" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
         done
 
     else
@@ -160,7 +157,6 @@ if [ -n "${DRA_ENVIRONMENT}" ] && [ "${DRA_ENVIRONMENT}" != " " ] && \
 
 
     if [ -n "${DRA_ADDITIONAL_LOG_FILE}" ] && [ "${DRA_ADDITIONAL_LOG_FILE}" != " " ] && \
-        [ -n "${DRA_ADDITIONAL_FORMAT_SELECT}" ] && [ "${DRA_ADDITIONAL_FORMAT_SELECT}" != "none" ] && \
         [ -n "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" ] && [ "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" != "none" ]; then
 
         for file in ${DRA_ADDITIONAL_LOG_FILE}
@@ -169,12 +165,12 @@ if [ -n "${DRA_ENVIRONMENT}" ] && [ "${DRA_ENVIRONMENT}" != " " ] && \
             extension="${filename##*.}"
             filename="${filename%.*}"
 
-            dra_commands "${DRA_ADDITIONAL_FORMAT_SELECT}" "$file" "${DRA_ENVIRONMENT}" "${DRA_APPLICATION_NAME}" "$filename.$extension" "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}"
+            dra_commands "$file" "${DRA_ENVIRONMENT}" "${DRA_APPLICATION_NAME}" "$filename.$extension" "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}"
         done
 
     else
         echo -e "${no_color}"
-        echo -e "For the Additional upload to work, you must enter a Location, Format, and a Life Cycle Stage."
+        echo -e "For the Additional upload to work, you must enter a Location and a Type of Metric."
         echo -e "${no_color}"
     fi
 else
