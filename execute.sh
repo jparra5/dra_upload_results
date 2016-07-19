@@ -64,13 +64,6 @@ function dra_commands {
     debugme echo "GRUNT_RESULT: $GRUNT_RESULT"
 
     if [ $GRUNT_RESULT -ne 0 ]; then
-        echo -e "${no_color}"
-        sudo apt-get update &>/dev/null
-        sudo apt-get -y install traceroute &>/dev/null
-        DLMS_ROUTE=`echo "${DLMS_SERVER}" | sed -e 's/^http:\/\///g' -e 's/^https:\/\///g'`
-        traceroute "$DLMS_ROUTE"
-        echo -e "${no_color}"
-
         exit 1
     fi
     
