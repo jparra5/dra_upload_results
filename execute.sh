@@ -143,11 +143,14 @@ if [ -n "${DRA_ENVIRONMENT}" ] && [ "${DRA_ENVIRONMENT}" != " " ] && \
 
     if [ -n "${DRA_LOG_FILE}" ] && [ "${DRA_LOG_FILE}" != " " ]; then
 
-        filename=$(basename "${DRA_LOG_FILE}")
-        extension="${filename##*.}"
-        filename="${filename%.*}"
+        for file in ${DRA_LOG_FILE}
+        do
+            filename=$(basename "$file")
+            extension="${filename##*.}"
+            filename="${filename%.*}"
 
-        dra_commands "${DRA_FORMAT_SELECT}" "${DRA_LOG_FILE}" "${DRA_ENVIRONMENT}" "${DRA_APPLICATION_NAME}" "$filename.$extension" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
+            dra_commands "${DRA_FORMAT_SELECT}" "$file" "${DRA_ENVIRONMENT}" "${DRA_APPLICATION_NAME}" "$filename.$extension" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
+        done
 
     else
         echo -e "${no_color}"
@@ -160,11 +163,14 @@ if [ -n "${DRA_ENVIRONMENT}" ] && [ "${DRA_ENVIRONMENT}" != " " ] && \
         [ -n "${DRA_ADDITIONAL_FORMAT_SELECT}" ] && [ "${DRA_ADDITIONAL_FORMAT_SELECT}" != "none" ] && \
         [ -n "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" ] && [ "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" != "none" ]; then
 
-        filename=$(basename "${DRA_ADDITIONAL_LOG_FILE}")
-        extension="${filename##*.}"
-        filename="${filename%.*}"
+        for file in ${DRA_ADDITIONAL_LOG_FILE}
+        do
+            filename=$(basename "$file")
+            extension="${filename##*.}"
+            filename="${filename%.*}"
 
-        dra_commands "${DRA_ADDITIONAL_FORMAT_SELECT}" "${DRA_ADDITIONAL_LOG_FILE}" "${DRA_ENVIRONMENT}" "${DRA_APPLICATION_NAME}" "$filename.$extension" "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}"
+            dra_commands "${DRA_ADDITIONAL_FORMAT_SELECT}" "$file" "${DRA_ENVIRONMENT}" "${DRA_APPLICATION_NAME}" "$filename.$extension" "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}"
+        done
 
     else
         echo -e "${no_color}"
