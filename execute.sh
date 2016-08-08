@@ -39,7 +39,7 @@ function dra_commands {
     dra_grunt_command="$dra_grunt_command -env=\"$2\""
     dra_grunt_command="$dra_grunt_command -runtime=\"$3\""
     dra_grunt_command="$dra_grunt_command -stage=\"$5\""
-    dra_grunt_command="$dra_grunt_command -drilldownUrl=\"$IDS_URL/$PIPELINE_ID/$PIPELINE_STAGE_ID/$IDS_JOB_ID/$BUILD_ID\""
+    dra_grunt_command="$dra_grunt_command -drilldownUrl=\"$IDS_URL/$PIPELINE_ID/$PIPELINE_STAGE_ID/executions/$PIPELINE_INITIAL_STAGE_EXECUTION_ID\""
 
     debugme echo -e "dra_grunt_command with tool, log, env, & stage: \n\t$dra_grunt_command"
 
