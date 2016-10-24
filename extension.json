@@ -29,22 +29,6 @@
             "desc_key": "WORKING_DIRECTORY_DESC"
         },
         {
-            "name": "ENVIRONMENT",
-            "type": "Text",
-            "required": "true",
-            "default_value": "",
-            "label_key": "ENVIRONMENT_KEY",
-            "desc_key": "ENVIRONMENT_DESC"
-        },
-        {
-            "name": "APPLICATION_NAME",
-            "type": "Text",
-            "required": "true",
-            "default_value": "",
-            "label_key": "APPLICATION_NAME_KEY",
-            "desc_key": "APPLICATION_NAME_DESC"
-        },
-        {
             "name": "LIFE_CYCLE_STAGE_SELECT",
             "type": "Select",
             "required": "true",
@@ -140,8 +124,6 @@ set +e
 
 export DRA_LOG_FILE=\"#LOG_FILE#\"
 export DRA_WORKING_DIRECTORY=\"#WORKING_DIRECTORY#\"
-export DRA_ENVIRONMENT=\"#ENVIRONMENT#\"
-export DRA_APPLICATION_NAME=\"#APPLICATION_NAME#\"
 export DRA_LIFE_CYCLE_STAGE_SELECT=#LIFE_CYCLE_STAGE_SELECT#
 
 export DRA_ADDITIONAL_LOG_FILE=\"#ADDITIONAL_LOG_FILE#\"

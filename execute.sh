@@ -25,10 +25,8 @@ set +x
 # Build Grunt-Idra call
 #
 #   $1  Log file location
-#   $2  Environment
-#   $3  Application Name
-#   $4  Artifact
-#   $5  Stage
+#   $2  Artifact
+#   $3  Stage
 #
 function dra_commands {
     echo -e "${no_color}"
@@ -36,22 +34,20 @@ function dra_commands {
 
     dra_grunt_command="grunt --gruntfile=$node_modules_dir/grunt-idra3/idra.js"
     dra_grunt_command="$dra_grunt_command -testResult=\"$DRA_CURRENT_DIR/$1\""
-    dra_grunt_command="$dra_grunt_command -env=\"$2\""
-    dra_grunt_command="$dra_grunt_command -runtime=\"$3\""
-    dra_grunt_command="$dra_grunt_command -stage=\"$5\""
+    dra_grunt_command="$dra_grunt_command -stage=\"$3\""
     # TODO: re-enable when IDS exposes the correct url.
     #dra_grunt_command="$dra_grunt_command -drilldownUrl=\"$IDS_URL/$PIPELINE_ID/$PIPELINE_STAGE_ID/executions/$PIPELINE_INITIAL_STAGE_EXECUTION_ID\""
 
-    debugme echo -e "dra_grunt_command with tool, log, env, & stage: \n\t$dra_grunt_command"
+    debugme echo -e "dra_grunt_command with log, & stage: \n\t$dra_grunt_command"
 
-    if [ -n "$4" ] && [ "$4" != " " ]; then
+    if [ -n "$2" ] && [ "$2" != " " ]; then
 
-        debugme echo -e "\tartifact: '$4' is defined and not empty"
-        dra_grunt_command="$dra_grunt_command -artifact=\"$4\""
+        debugme echo -e "\tartifact: '$2' is defined and not empty"
+        dra_grunt_command="$dra_grunt_command -artifact=\"$2\""
         debugme echo -e "\tdra_grunt_command: \n\t\t$dra_grunt_command"
 
     else
-        debugme echo -e "\tartifact: '$4' is not defined or is empty"
+        debugme echo -e "\tartifact: '$2' is not defined or is empty"
         debugme echo -e "${no_color}"
     fi
 
@@ -115,8 +111,6 @@ custom_cmd
 echo -e "${no_color}"
 debugme echo "DRA_LOG_FILE: ${DRA_LOG_FILE}"
 debugme echo "DRA_WORKING_DIRECTORY: ${DRA_WORKING_DIRECTORY}"
-debugme echo "DRA_ENVIRONMENT: ${DRA_ENVIRONMENT}"
-debugme echo "DRA_APPLICATION_NAME: ${DRA_APPLICATION_NAME}"
 debugme echo "DRA_LIFE_CYCLE_STAGE_SELECT: ${DRA_LIFE_CYCLE_STAGE_SELECT}"
 
 debugme echo "DRA_ADDITIONAL_LOG_FILE: ${DRA_ADDITIONAL_LOG_FILE}"
@@ -130,46 +124,39 @@ debugme echo "PIPELINE_INITIAL_STAGE_EXECUTION_ID: $PIPELINE_INITIAL_STAGE_EXECU
 debugme echo -e "${no_color}"
 
 
-if [ -n "${DRA_ENVIRONMENT}" ] && [ "${DRA_ENVIRONMENT}" != " " ] && \
-    [ -n "${DRA_APPLICATION_NAME}" ] && [ "${DRA_APPLICATION_NAME}" != " " ]; then
 
-    if [ -n "${DRA_LOG_FILE}" ] && [ "${DRA_LOG_FILE}" != " " ]; then
+if [ -n "${DRA_LOG_FILE}" ] && [ "${DRA_LOG_FILE}" != " " ]; then
 
-        for file in ${DRA_LOG_FILE}
-        do
-            filename=$(basename "$file")
-            extension="${filename##*.}"
-            filename="${filename%.*}"
+    for file in ${DRA_LOG_FILE}
+    do
+        filename=$(basename "$file")
+        extension="${filename##*.}"
+        filename="${filename%.*}"
 
-            dra_commands "$file" "${DRA_ENVIRONMENT}" "${DRA_APPLICATION_NAME}" "$filename.$extension" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
-        done
+        dra_commands "$file" "$filename.$extension" "${DRA_LIFE_CYCLE_STAGE_SELECT}"
+    done
 
-    else
-        echo -e "${no_color}"
-        echo -e "${red}Location must be declared."
-        echo -e "${no_color}"
-    fi
-
-
-    if [ -n "${DRA_ADDITIONAL_LOG_FILE}" ] && [ "${DRA_ADDITIONAL_LOG_FILE}" != " " ] && \
-        [ -n "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" ] && [ "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" != "none" ]; then
-
-        for file in ${DRA_ADDITIONAL_LOG_FILE}
-        do
-            filename=$(basename "$file")
-            extension="${filename##*.}"
-            filename="${filename%.*}"
-
-            dra_commands "$file" "${DRA_ENVIRONMENT}" "${DRA_APPLICATION_NAME}" "$filename.$extension" "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}"
-        done
-
-    else
-        echo -e "${no_color}"
-        echo -e "For the Additional upload to work, you must enter a Location and a Type of Metric."
-        echo -e "${no_color}"
-    fi
 else
     echo -e "${no_color}"
-    echo -e "${red}Environment Name and Application Name must be declared."
+    echo -e "${red}Location must be declared."
+    echo -e "${no_color}"
+fi
+
+
+if [ -n "${DRA_ADDITIONAL_LOG_FILE}" ] && [ "${DRA_ADDITIONAL_LOG_FILE}" != " " ] && \
+    [ -n "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" ] && [ "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" != "none" ]; then
+
+    for file in ${DRA_ADDITIONAL_LOG_FILE}
+    do
+        filename=$(basename "$file")
+        extension="${filename##*.}"
+        filename="${filename%.*}"
+
+        dra_commands "$file" "$filename.$extension" "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}"
+    done
+
+else
+    echo -e "${no_color}"
+    echo -e "For the Additional upload to work, you must enter a Location and a Type of Metric."
     echo -e "${no_color}"
 fi
