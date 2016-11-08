@@ -132,6 +132,11 @@ export DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT=#ADDITIONAL_LIFE_CYCLE_STAGE_SELEC
         
 function custom_cmd {
     eval #COMMAND#
+    CMDRESULT=$?
+
+    if [ $CMDRESULT -ne 0 ]; then
+        exit 1
+    fi
 }
     
 export -f custom_cmd        
