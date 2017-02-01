@@ -103,9 +103,9 @@ export DRA_CURRENT_DIR=`pwd`
 
 
 
-installDRADependencies
-
 custom_cmd
+
+installDRADependencies
 
 
 echo -e "${no_color}"
