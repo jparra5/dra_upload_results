@@ -118,7 +118,7 @@
         "shell": "#!/bin/bash
 
 set +x
-set +e 
+set +e
 
 
 
@@ -128,20 +128,21 @@ export DRA_LIFE_CYCLE_STAGE_SELECT=#LIFE_CYCLE_STAGE_SELECT#
 
 export DRA_ADDITIONAL_LOG_FILE=\"#ADDITIONAL_LOG_FILE#\"
 export DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT=#ADDITIONAL_LIFE_CYCLE_STAGE_SELECT#
-        
+
+export DRA_CURRENT_DIR=`pwd`
         
 function custom_cmd {
     eval #COMMAND#
     CMDRESULT=$?
 }
-    
-export -f custom_cmd        
-        
-        
+
+export -f custom_cmd
+
+
 . $EXT_DIR/_init.sh
 . $EXT_DIR/execute.sh
 RESULT=$?
-        
+
 if [ $RESULT -ne 0 ] || [ $CMDRESULT -ne 0 ]; then
     exit 1
 fi
