@@ -16,7 +16,7 @@
 #********************************************************************************
 
 set +e
-set +x 
+set +x
 
 
 
@@ -64,7 +64,7 @@ function dra_commands {
     if [ $GRUNT_RESULT -ne 0 ]; then
         exit 1
     fi
-    
+
     echo -e "${no_color}"
 }
 
@@ -127,7 +127,7 @@ debugme echo -e "${no_color}"
 
 if [ -n "${DRA_LOG_FILE}" ] && [ "${DRA_LOG_FILE}" != " " ]; then
 
-    for file in ${DRA_LOG_FILE}
+    for file in ${DRA_CURRENT_DIR}/${DRA_LOG_FILE}
     do
         filename=$(basename "$file")
         extension="${filename##*.}"
@@ -146,7 +146,7 @@ fi
 if [ -n "${DRA_ADDITIONAL_LOG_FILE}" ] && [ "${DRA_ADDITIONAL_LOG_FILE}" != " " ] && \
     [ -n "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" ] && [ "${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}" != "none" ]; then
 
-    for file in ${DRA_ADDITIONAL_LOG_FILE}
+    for file in ${DRA_CURRENT_DIR}/${DRA_ADDITIONAL_LOG_FILE}
     do
         filename=$(basename "$file")
         extension="${filename##*.}"
