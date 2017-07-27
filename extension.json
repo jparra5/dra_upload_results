@@ -120,8 +120,6 @@
 set +x
 set +e
 
-
-
 export DRA_LOG_FILE=\"#LOG_FILE#\"
 export DRA_WORKING_DIRECTORY=\"#WORKING_DIRECTORY#\"
 export DRA_LIFE_CYCLE_STAGE_SELECT=#LIFE_CYCLE_STAGE_SELECT#
@@ -130,17 +128,39 @@ export DRA_ADDITIONAL_LOG_FILE=\"#ADDITIONAL_LOG_FILE#\"
 export DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT=#ADDITIONAL_LIFE_CYCLE_STAGE_SELECT#
 
 export DRA_CURRENT_DIR=`pwd`
-        
+
 function custom_cmd {
     eval #COMMAND#
     CMDRESULT=$?
 }
 
-export -f custom_cmd
+custom_cmd
 
+# change to the new directory of specified by the user
+if [ -n \"${DRA_WORKING_DIRECTORY}\" ] && [ \"${DRA_WORKING_DIRECTORY}\" != "" ]; then
+    cd \"${DRA_WORKING_DIRECTORY}\"
+    CHANGE_WORKING_DIR_RESULT=$?
 
-. $EXT_DIR/_init.sh
-. $EXT_DIR/execute.sh
+    if [ $CHANGE_WORKING_DIR_RESULT -ne 0 ]; then
+        exit 1
+    fi
+else
+    # need this in case the user has cd'd to a totally different location in custom script
+    cd \"${DRA_CURRENT_DIR}\"
+fi
+
+# install dev version of the plugin in stage1
+if [[ $IDS_URL == *\"stage1\"* ]]; then
+    npm install -g grunt-idra3@dev &>/dev/null
+else
+    npm install -g grunt-idra3 &>/dev/null
+fi
+
+# upload the first file(s)
+idra --publishtestresult --filelocation=\"$DRA_LOG_FILE\" --type=$DRA_LIFE_CYCLE_STAGE_SELECT
+
+# upload additional files(s)
+idra --publishtestresult --filelocation=\"$DRA_ADDITIONAL_LOG_FILE\" --type=$DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT
 RESULT=$?
 
 if [ $RESULT -ne 0 ] || [ $CMDRESULT -ne 0 ]; then
