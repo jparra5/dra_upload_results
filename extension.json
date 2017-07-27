@@ -136,7 +136,7 @@ function custom_cmd {
 
 custom_cmd
 
-# change to the new directory of specified by the user
+##### change to the new directory of specified by the user
 if [ -n \"${DRA_WORKING_DIRECTORY}\" ] && [ \"${DRA_WORKING_DIRECTORY}\" != \"\" ]; then
     cd \"${DRA_WORKING_DIRECTORY}\"
     CHANGE_WORKING_DIR_RESULT=$?
@@ -149,18 +149,35 @@ else
     cd \"${DRA_CURRENT_DIR}\"
 fi
 
-# install dev version of the plugin in stage1
+##### install dev version of the plugin in stage1
 if [[ $IDS_URL == *\"stage1\"* ]]; then
     npm install -g grunt-idra3@dev &>/dev/null
 else
     npm install -g grunt-idra3 &>/dev/null
 fi
 
-# upload the first file(s)
-idra --publishtestresult --filelocation=\"$DRA_LOG_FILE\" --type=$DRA_LIFE_CYCLE_STAGE_SELECT
+##### upload the first file(s)
+if [ -n \"${DRA_LOG_FILE}\" ] && [ \"${DRA_LOG_FILE}\" != \" \" ]; then
+    if [[ -n $LOGICAL_ENV_NAME ]]; then
+        idra --publishtestresult --filelocation=\"$DRA_LOG_FILE\" --type=$DRA_LIFE_CYCLE_STAGE_SELECT --env=$LOGICAL_ENV_NAME
+    else
+        idra --publishtestresult --filelocation=\"$DRA_LOG_FILE\" --type=$DRA_LIFE_CYCLE_STAGE_SELECT
+    fi
+else
+    echo -e \"Result File Location not specified. No file was uploaded.\"
+fi
 
-# upload additional files(s)
-idra --publishtestresult --filelocation=\"$DRA_ADDITIONAL_LOG_FILE\" --type=$DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT
+##### upload additional files(s)
+if [ -n \"${DRA_ADDITIONAL_LOG_FILE}\" ] && [ \"${DRA_ADDITIONAL_LOG_FILE}\" != \" \" ] && \
+    [ -n \"${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}\" ] && [ \"${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}\" != \"none\" ]; then
+    if [[ -n $LOGICAL_ENV_NAME ]]; then
+        idra --publishtestresult --filelocation=\"$DRA_ADDITIONAL_LOG_FILE\" --type=$DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT --env=$LOGICAL_ENV_NAME
+    else
+        idra --publishtestresult --filelocation=\"$DRA_ADDITIONAL_LOG_FILE\" --type=$DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT
+    fi
+else
+    echo -e \"Additional Result File Location or Additional Type of Metric not specified. No Additional file was uploaded.\"
+fi
 RESULT=$?
 
 if [ $RESULT -ne 0 ] || [ $CMDRESULT -ne 0 ]; then
