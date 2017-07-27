@@ -137,7 +137,7 @@ function custom_cmd {
 custom_cmd
 
 # change to the new directory of specified by the user
-if [ -n \"${DRA_WORKING_DIRECTORY}\" ] && [ \"${DRA_WORKING_DIRECTORY}\" != "" ]; then
+if [ -n \"${DRA_WORKING_DIRECTORY}\" ] && [ \"${DRA_WORKING_DIRECTORY}\" != \"\" ]; then
     cd \"${DRA_WORKING_DIRECTORY}\"
     CHANGE_WORKING_DIR_RESULT=$?
 
