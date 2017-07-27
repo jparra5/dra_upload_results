@@ -158,10 +158,10 @@ fi
 
 ##### upload the first file(s)
 if [ -n \"${DRA_LOG_FILE}\" ] && [ \"${DRA_LOG_FILE}\" != \" \" ]; then
-    if [[ -n \"$LOGICAL_ENV_NAME\" ]]; then
-        idra --publishtestresult --filelocation=\"$DRA_LOG_FILE\" --type=$DRA_LIFE_CYCLE_STAGE_SELECT --env=$LOGICAL_ENV_NAME
+    if [[ -n \"${LOGICAL_ENV_NAME}\" ]]; then
+        idra --publishtestresult --filelocation=\"${DRA_LOG_FILE}\" --type=${DRA_LIFE_CYCLE_STAGE_SELECT} --env=${LOGICAL_ENV_NAME}
     else
-        idra --publishtestresult --filelocation=\"$DRA_LOG_FILE\" --type=$DRA_LIFE_CYCLE_STAGE_SELECT
+        idra --publishtestresult --filelocation=\"${DRA_LOG_FILE}\" --type=${DRA_LIFE_CYCLE_STAGE_SELECT}
     fi
 else
     echo \"Result File Location not specified. No file was uploaded.\"
@@ -170,10 +170,10 @@ fi
 ##### upload additional files(s)
 if [ -n \"${DRA_ADDITIONAL_LOG_FILE}\" ] && [ \"${DRA_ADDITIONAL_LOG_FILE}\" != \" \" ] && \
     [ -n \"${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}\" ] && [ \"${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}\" != \"none\" ]; then
-    if [[ -n \"$LOGICAL_ENV_NAME\" ]]; then
-        idra --publishtestresult --filelocation=\"$DRA_ADDITIONAL_LOG_FILE\" --type=$DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT --env=$LOGICAL_ENV_NAME
+    if [[ -n \"${LOGICAL_ENV_NAME}\" ]]; then
+        idra --publishtestresult --filelocation=\"${DRA_ADDITIONAL_LOG_FILE}\" --type=${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT} --env=${LOGICAL_ENV_NAME}
     else
-        idra --publishtestresult --filelocation=\"$DRA_ADDITIONAL_LOG_FILE\" --type=$DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT
+        idra --publishtestresult --filelocation=\"${DRA_ADDITIONAL_LOG_FILE}\" --type=${DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT}
     fi
 else
     echo \"Additional Result File Location or Additional Type of Metric not specified. No Additional file was uploaded.\"
