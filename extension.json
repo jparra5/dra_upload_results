@@ -164,7 +164,7 @@ if [ -n \"${DRA_LOG_FILE}\" ] && [ \"${DRA_LOG_FILE}\" != \" \" ]; then
         idra --publishtestresult --filelocation=\"$DRA_LOG_FILE\" --type=$DRA_LIFE_CYCLE_STAGE_SELECT
     fi
 else
-    echo -e \"Result File Location not specified. No file was uploaded.\"
+    echo \"Result File Location not specified. No file was uploaded.\"
 fi
 
 ##### upload additional files(s)
@@ -176,7 +176,7 @@ if [ -n \"${DRA_ADDITIONAL_LOG_FILE}\" ] && [ \"${DRA_ADDITIONAL_LOG_FILE}\" != 
         idra --publishtestresult --filelocation=\"$DRA_ADDITIONAL_LOG_FILE\" --type=$DRA_ADDITIONAL_LIFE_CYCLE_STAGE_SELECT
     fi
 else
-    echo -e \"Additional Result File Location or Additional Type of Metric not specified. No Additional file was uploaded.\"
+    echo \"Additional Result File Location or Additional Type of Metric not specified. No Additional file was uploaded.\"
 fi
 RESULT=$?
 
