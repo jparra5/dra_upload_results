@@ -149,6 +149,9 @@ else
     cd \"${DRA_CURRENT_DIR}\"
 fi
 
+# need node 4.x and above to run grunt-idra3 now
+export PATH=/opt/IBM/node-v4.2/bin:$PATH
+
 # install dev version of the plugin in stage1
 if [[ $IDS_URL == *\"stage1\"* ]]; then
     npm install -g grunt-idra3@dev &>/dev/null
